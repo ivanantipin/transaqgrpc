@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <!--      needed to have everything in one directory for wine-->
+        <!--    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
+        <RootNamespace>Firelib</RootNamespace>
+    </PropertyGroup>
+
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
+        <PlatformTarget>x64</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>portable</DebugType>
+    </PropertyGroup>
+
+
+
+    <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.8.0" />
+        <PackageReference Include="Grpc" Version="1.21.0" />
+        <PackageReference Include="Grpc.Core" Version="1.21.0" />
+        <PackageReference Include="Grpc.Tools" Version="1.21.0" PrivateAssets="All" />
+        <Protobuf Include="helloworld.proto" Link="helloworld.proto" />
+        <!--      to copy transaq lib into output directory-->
+        <ContentWithTargetPath Include="txmlconnector64.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <TargetPath>txmlconnector64.dll</TargetPath>
+        </ContentWithTargetPath>
+        
+        
+    </ItemGroup>
+
+
+
+
+
+
+</Project>
