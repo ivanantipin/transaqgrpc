@@ -24,27 +24,11 @@ package firelib;
 service TransaqConnector {
   // Sends a greeting
   rpc connect (Empty) returns (stream Str) {}
-  rpc sendCommand(Command) returns (CommandStatusMsg){}
+  rpc sendCommand(Str) returns (Str){}
 }
 
 message Str{
   string data = 1;
-}
-
-message CommandStatusMsg{
-  CommandStatus status = 1;
-  string msg = 2;
-  
-}
-
-enum CommandStatus{
-  OK = 0;
-  FAIL = 1;
-  
-}
-
-message Command{
-  string txt = 1;
 }
 
 message Empty {}
