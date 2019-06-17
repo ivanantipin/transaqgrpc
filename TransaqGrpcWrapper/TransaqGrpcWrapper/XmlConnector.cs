@@ -28,21 +28,19 @@ namespace Firelib
         public static CommandStatusMsg ConnectorSendCommand(string command)
         {
             var pData = MarshalUtf8.StringToHGlobalUtf8(command);
-            var (msg, success) = ptrToDescr(SendCommand(pData));
+            var msg= ptrToDescr(SendCommand(pData));
             Marshal.FreeHGlobal(pData);
             return new CommandStatusMsg
             {
-                Status = success ? CommandStatus.Ok : CommandStatus.Fail,
-                Msg = $"{msg}, return code {success}"
+                Msg = $"{msg}"
             };
         }
 
-        private static (string msg, bool success) ptrToDescr(IntPtr pResult)
+        private static string ptrToDescr(IntPtr pResult)
         {
-            var success = pResult.Equals(IntPtr.Zero);
             var result = MarshalUtf8.PtrToStringUtf8(pResult);
             FreeMemory(pResult);
-            return (result, success);
+            return result;
         }
 
 

@@ -10,7 +10,7 @@
     <PackageReference Include="Google.Protobuf" Version="3.8.0" />
     <PackageReference Include="Grpc" Version="1.21.0" />
     <PackageReference Include="Grpc.Tools" Version="1.21.0" PrivateAssets="All" />
-    <Protobuf Include="../TransaqGrpcWrapper/helloworld.proto" Link="helloworld.proto" />
+    <Protobuf Include="../../protos/helloworld.proto" Link="helloworld.proto" />
     
   </ItemGroup>
 
