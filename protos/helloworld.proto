@@ -28,7 +28,7 @@ service TransaqConnector {
 }
 
 message Str{
-  string data = 1;
+  string txt = 1;
 }
 
 message Empty {}

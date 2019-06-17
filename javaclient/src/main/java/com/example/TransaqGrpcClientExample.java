@@ -57,7 +57,7 @@ public class TransaqGrpcClientExample {
         while (true){
             try {
 
-                CommandStatusMsg response = client.blockingStub.sendCommand(Command.newBuilder().setTxt(getLoginCommand("TCNN9977", "v8GuG5", "tr1-demo5.finam.ru", "3939")).build());
+                Str response = client.blockingStub.sendCommand(Str.newBuilder().setTxt(getLoginCommand("TCNN9977", "v8GuG5", "tr1-demo5.finam.ru", "3939")).build());
 
                 System.out.println("login command response:" + response);
 
