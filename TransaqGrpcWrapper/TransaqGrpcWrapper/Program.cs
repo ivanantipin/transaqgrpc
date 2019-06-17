@@ -13,7 +13,7 @@ namespace Firelib
         
         private readonly ConcurrentDictionary<IServerStreamWriter<Str>,BlockingCollection<string>> dic = new ConcurrentDictionary<IServerStreamWriter<Str>, BlockingCollection<string>>();
 
-        public void onMsg(string str)
+        public void OnMsg(string str)
         {
             try
             {
@@ -44,46 +44,35 @@ namespace Firelib
                     {
                         var take = dic[responseStream].Take();
                         Console.Out.WriteLine($"pushed to client: {take}");
-                        responseStream.WriteAsync(new Str {Data = take});
+                        responseStream.WriteAsync(new Str {Txt = take});
                     }
 
                 }
                 catch (Exception e)
                 {
-                    BlockingCollection<string> tmp;
-                    dic.Remove(responseStream, out tmp);
+                    dic.Remove(responseStream, out _);
                     Console.WriteLine(e);
                 }
             });
         }
 
-        public override Task<CommandStatusMsg> sendCommand(Command request, ServerCallContext context)
+        public override Task<Str> sendCommand(Str request, ServerCallContext context)
         {
-            try
-            {
-                Console.Out.WriteLine($"sending command {request}");
-                var ret = XmlConnector.ConnectorSendCommand(request.Txt);
+            Console.Out.WriteLine($"sending command {request}");
+            var ret = XmlConnector.ConnectorSendCommand(request.Txt);
 
-                Console.Out.WriteLine($"command response: {ret}");
-                return Task.FromResult(ret);
-            }
-            catch (Exception e)
-            {
-                return Task.FromResult(new CommandStatusMsg
-                {
-                    Status = CommandStatus.Fail
-                });
-            }
+            Console.Out.WriteLine($"command response: {ret}");
+            return Task.FromResult(ret);
         }
     }
 
-    internal class Program
+    internal static class Program
     {
         private const int Port = 50051;
 
         public static void Main(string[] args)
         {
-            XmlConnector.path = args.Length == 0 ? Directory.GetCurrentDirectory() : args[0];
+            XmlConnector.Path = args.Length == 0 ? Directory.GetCurrentDirectory() : args[0];
 
             var transaqConnectorImpl = new TransaqConnectorImpl();
             var server = new Server
@@ -94,7 +83,7 @@ namespace Firelib
 
             XmlConnector.Init(str =>
             {
-                transaqConnectorImpl.onMsg(str);
+                transaqConnectorImpl.OnMsg(str);
                 return str;
             });
 

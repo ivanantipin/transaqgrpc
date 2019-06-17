@@ -36,7 +36,7 @@ namespace GreeterClient
                 {
                     var msgInfos = client.connect(new Empty());
                     
-                    var request = new Command
+                    var request = new Str
                     {
                         Txt = makeLoginCommand("TCNN10000", "zuDR3W", "tr1-demo5.finam.ru", "3939")
                     };
@@ -48,7 +48,7 @@ namespace GreeterClient
                     while (await msgInfos.ResponseStream.MoveNext(CancellationToken.None))
                     {
                         Console.Out.WriteLine("received");
-                        Console.Out.WriteLine(msgInfos.ResponseStream.Current.Data);
+                        Console.Out.WriteLine(msgInfos.ResponseStream.Current.Txt);
                     }
                 }
                 catch (Exception e)

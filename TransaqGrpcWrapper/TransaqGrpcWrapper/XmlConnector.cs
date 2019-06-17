@@ -1,11 +1,12 @@
 using System;
 using System.Runtime.InteropServices;
 
+// ReSharper disable once IdentifierTypo
 namespace Firelib
 {
     internal static class XmlConnector
     {
-        public static string path;
+        public static string Path;
 
         public static bool Init(Func<string, string> callback)
         {
@@ -20,45 +21,49 @@ namespace Firelib
 
             if (!SetCallback(predicate)) throw new Exception("Cant set callback");
 
-            return ConnectorInitialize(path, 3);
+            return ConnectorInitialize(Path, 3);
         }
 
 
         //--------------------------------------------------------------------------------
-        public static CommandStatusMsg ConnectorSendCommand(string command)
+        public static Str ConnectorSendCommand(string command)
         {
             var pData = MarshalUtf8.StringToHGlobalUtf8(command);
-            var msg= ptrToDescr(SendCommand(pData));
+            var msg = PtrToDescr(SendCommand(pData));
             Marshal.FreeHGlobal(pData);
-            return new CommandStatusMsg
+            return new Str
             {
-                Msg = $"{msg}"
+                Txt = msg
             };
         }
 
-        private static string ptrToDescr(IntPtr pResult)
+        private static string PtrToDescr(IntPtr pResult)
         {
+            if (IntPtr.Zero == pResult)
+            {
+                return null;
+            }
             var result = MarshalUtf8.PtrToStringUtf8(pResult);
             FreeMemory(pResult);
             return result;
         }
 
 
-        public static bool ConnectorInitialize(string path, short logLevel)
+        private static bool ConnectorInitialize(string path, short logLevel)
         {
             var pPath = MarshalUtf8.StringToHGlobalUtf8(path);
-            var (msg, success) = ptrToDescr(Initialize(pPath, logLevel));
+            var msg = PtrToDescr(Initialize(pPath, logLevel));
             Marshal.FreeHGlobal(pPath);
-            Console.Out.WriteLine(!success ? $"failed to init connector {msg}" : $"Initialize() OK {msg}");
-            return success;
+            Console.Out.WriteLine(msg != null ? $"failed to init connector {msg}" : $"Initialize() OK");
+            return msg == null;
         }
 
 
-        public static void ConnectorUnInitialize()
-        {
-            var (msg, success) = ptrToDescr(UnInitialize());
-            Console.Out.WriteLine(!success ? $"uninit failed {msg}" : $"uninit OK {msg}");
-        }
+// fixme do we need this?        public static void ConnectorUnInitialize()
+//        {
+//            var msg = PtrToDescr(UnInitialize());
+//            Console.Out.WriteLine(!success ? $"uninit failed {msg}" : $"uninit OK {msg}");
+//        }
 
 
         //--------------------------------------------------------------------------------
