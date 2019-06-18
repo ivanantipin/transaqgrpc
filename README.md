@@ -1,11 +1,22 @@
-transaq provide [gRPC](https://grpc.io/) interface to 
+### TransaqGrpcWrapper 
+
+#### Description
+
+[gRPC](https://grpc.io/) interface around 
 [TransaqConnector](https://www.finam.ru/howtotrade/tconnector/)
-to be able to connect from different languages via TCP (remote procedure call) 
+to be able to connect from different languages via TCP (remote procedure call) and linux as well 
+
+#### Modules
+
+1. *tqgrpcserver* - server around txmlconnector64.dll
+2. *client*
+    1. *java* - java client grpc example
+    2. *csharp* - c# client grpc example
+3. protos/transaq.proto - service description, see below
 
 
-current wrapper works with 64 bit version of transaq.dll
 
-description of service
+#### Service proto description
 
 ```protobuf
 
@@ -37,3 +48,7 @@ message Empty {}
 
 
 ```
+
+#### How to start server in Linux
+
+you can start wrapper in [Wine](https://www.winehq.org/) version 4.0 if you want, you need to have .net installed ( should be prompted)
