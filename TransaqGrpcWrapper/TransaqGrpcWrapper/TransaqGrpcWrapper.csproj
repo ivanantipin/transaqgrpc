@@ -24,7 +24,7 @@
         <PackageReference Include="Grpc" Version="1.21.0" />
         <PackageReference Include="Grpc.Core" Version="1.21.0" />
         <PackageReference Include="Grpc.Tools" Version="1.21.0" PrivateAssets="All" />
-        <Protobuf Include="../../protos/helloworld.proto" Link="helloworld.proto" />
+        <Protobuf Include="../../protos/transaq.proto" Link="transaq.proto" />
         <!--      to copy transaq lib into output directory-->
         <ContentWithTargetPath Include="txmlconnector64.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
