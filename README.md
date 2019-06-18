@@ -64,5 +64,5 @@ Press any key to stop the server...
 
 #### Known issues
 
-1. russian encodings does not look good in console output
+1. russian messages does not look good in console output
 2. port is unprotected - hackers can break this from outside!! need to enable SSL in grpc
