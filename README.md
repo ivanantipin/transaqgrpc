@@ -49,6 +49,6 @@ message Empty {}
 
 ```
 
-#### How to start server in Linux
+#### Starting server in Linux
 
-you can start wrapper in [Wine](https://www.winehq.org/) version 4.0 if you want, you need to have .net installed ( should be prompted)
+server can be started with [Wine](https://www.winehq.org/) version 4.0 , wine have to have .net installed ( should be prompted)
