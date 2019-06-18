@@ -51,7 +51,7 @@ message Empty {}
 
 #### Starting server in Linux
 
-server can be started with [Wine](https://www.winehq.org/) version 4.0 , wine have to have .net installed ( should be prompted)
+server can be started with [Wine](https://www.winehq.org/) version 4.0 , Wine has to have .net installed ( should be prompted)
 
 ##### Example output:
 
