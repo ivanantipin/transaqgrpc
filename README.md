@@ -52,3 +52,17 @@ message Empty {}
 #### Starting server in Linux
 
 server can be started with [Wine](https://www.winehq.org/) version 4.0 , wine have to have .net installed ( should be prompted)
+
+##### Example output:
+
+```shell
+ivan@fire:~/vbshare$ wine win7-x64/tqgrpcserver.exe 
+Initialize() OK
+Greeter server listening on port 50051
+Press any key to stop the server...
+```
+
+#### Known issues
+
+1. russian encodings does not look good in console output
+2. port is unprotected - hackers can break this from outside!! need to enable SSL in grpc

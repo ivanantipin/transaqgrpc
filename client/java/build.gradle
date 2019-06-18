@@ -59,7 +59,7 @@ sourceSets {
     main {
         proto {
             // In addition to the default 'src/main/proto'
-            srcDir '../protos'
+            srcDir '../../protos'
         }
         java {
             srcDirs = ['src/main/java']

@@ -1,8 +1,11 @@
 package com.example;
 
-import com.firelib.*;
+import com.firelib.Empty;
+import com.firelib.Str;
+import com.firelib.TransaqConnectorGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
@@ -59,13 +62,15 @@ public class TransaqGrpcClientExample {
 
                 Str response = client.blockingStub.sendCommand(Str.newBuilder().setTxt(getLoginCommand("TCNN9977", "v8GuG5", "tr1-demo5.finam.ru", "3939")).build());
 
-                System.out.println("login command response:" + response);
+
+
+                System.out.println("login command response:" + StringEscapeUtils.unescapeJava(response.getTxt()));
 
                 Iterator<Str> messages = client.blockingStub.connect(Empty.newBuilder().build());
 
                 //continuous messages, this call will generally block till the end
                 messages.forEachRemaining(str->{
-                    System.out.println("server message" + str);
+                    System.out.println("server message" + StringEscapeUtils.unescapeJava(str.getTxt()));
                 });
 
             }catch (Exception e){
