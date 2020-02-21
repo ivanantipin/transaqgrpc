@@ -44,7 +44,7 @@ namespace Firelib
                     {
                         var take = dic[responseStream].Take();
                         Console.Out.WriteLine($"pushed to client: {take}");
-                        responseStream.WriteAsync(new Str {Txt = take});
+                        responseStream.WriteAsync(new Str {Txt = take}).Wait();
                     }
 
                 }
@@ -73,12 +73,19 @@ namespace Firelib
         public static void Main(string[] args)
         {
             XmlConnector.Path = args.Length == 0 ? Directory.GetCurrentDirectory() : args[0];
+            
+            var cacert = File.ReadAllText(@"/keys/ca.crt");
+            var servercert = File.ReadAllText(@"/keys/server.crt");
+            var serverkey = File.ReadAllText(@"/keys/server.key");
+            var keypair = new KeyCertificatePair(servercert, serverkey);
+            var sslCredentials = new SslServerCredentials(new List<KeyCertificatePair>() {keypair}, cacert, false);
+
 
             var transaqConnectorImpl = new TransaqConnectorImpl();
             var server = new Server
             {
                 Services = {TransaqConnector.BindService(transaqConnectorImpl)},
-                Ports = {new ServerPort("0.0.0.0", Port, ServerCredentials.Insecure)}
+                Ports = {new ServerPort("0.0.0.0", Port, sslCredentials)}
             };
 
             XmlConnector.Init(str =>
